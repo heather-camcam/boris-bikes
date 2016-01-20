@@ -5,9 +5,9 @@ describe DockingStation do
 
   it { should respond_to(:release_bike) }
 
-  it 'raises error "Docking Station Full" when docking station capacity is reached' do
+  it 'raises error "Docking Station Full" when docking station capacity is reached' do  ####TROUBLE
     20.times {subject.dock(Bike.new)} #GUARD CONDITION
-    expect {subject.full? }.to raise_error("Docking station full")
+    expect {subject.dock(Bike.new)}.to raise_error("Docking station full")
   end
 
   context 'responds to "dock" with one argument'

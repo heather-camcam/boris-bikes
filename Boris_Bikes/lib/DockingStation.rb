@@ -17,15 +17,18 @@ attr_reader :bike
   end
 
   def dock(potato)   # Doing 2 things
-    if self.full?
-      Exception.new("Docking station full")
+    if full?
+      raise Exception.new("Docking station full")
     else
        @bikes << potato
     end
   end
 
   def full?
-    @bikes.size >= 20 ? true : false   # => Defining the capacity
+    @bikes.size >= 20
   end
 
+  def empty?
+    @bikes.empty?
+  end
 end
