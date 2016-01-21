@@ -1,6 +1,7 @@
 require 'DockingStation'
 
 describe DockingStation do
+  let(:dummy_bike) { double :bike }
   subject(:DockingStation) {described_class.new}
 
 
@@ -12,8 +13,8 @@ describe DockingStation do
     end
     it "allows the user to set a default capacity when initializing a docking station" do
       station = DockingStation.new(45)
-      45.times {station.dock Bike.new}
-      expect{station.dock Bike.new}.to raise_error("Docking station full")
+      45.times {station.dock dummy_bike}
+      expect{station.dock dummy_bike}.to raise_error("Docking station full")
     end
   end
 
@@ -23,8 +24,8 @@ describe DockingStation do
     it { is_expected.to respond_to(:dock).with(1).argument}
 
   it 'raises error "Docking Station Full" when docking station capacity is reached' do  ####TROUBLE
-    DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)} #GUARD CONDITION
-    expect {subject.dock(Bike.new)}.to raise_error("Docking station full")
+    DockingStation::DEFAULT_CAPACITY.times {subject.dock(dummy_bike)} #GUARD CONDITION
+    expect {subject.dock(dummy_bike)}.to raise_error("Docking station full")
   end
 
 # ATTR_ READER TEST
@@ -40,7 +41,8 @@ describe DockingStation do
 
   describe '#release_bike' do
     it 'expects "release_bike" to get a working bike' do
-      bike = Bike.new
+      allow(dummy_bike).to receive(:broken?).and_return(false)
+      bike = dummy_bike
       subject.dock(bike)
       expect(subject.release_bike).to eq bike
     end
@@ -50,7 +52,9 @@ describe DockingStation do
     end
 
     it 'raises error "Sorry, this Bike is Broken" when asked to release a broken bike.' do
-      bike = Bike.new
+      allow(dummy_bike).to receive(:report_broken).and_return(true)
+      allow(dummy_bike).to receive(:broken?).and_return(true)
+      bike = dummy_bike
       bike.report_broken
       subject.dock(bike)
       expect {subject.release_bike}.to raise_error("Sorry, this Bike is Broken")
