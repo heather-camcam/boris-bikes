@@ -3,23 +3,41 @@ require 'DockingStation'
 describe DockingStation do
   subject(:DockingStation) {described_class.new}
 
-  it { should respond_to(:release_bike) }
 
-  it 'raises error "Docking Station Full" when docking station capacity is reached' do  ####TROUBLE
-    20.times {subject.dock(Bike.new)} #GUARD CONDITION
-    expect {subject.dock(Bike.new)}.to raise_error("Docking station full")
+# INITIALIZE TESTS
+
+  describe "#initialize" do
+    it "allows the user to set a capacity when a new docking station is made" do
+      expect(subject.capacity).to eq (20)
+    end
   end
+
+
+# DOCKING BIKE TESTS
 
   context 'responds to "dock" with one argument'
     it { is_expected.to respond_to(:dock).with(1).argument}
 
+  it 'raises error "Docking Station Full" when docking station capacity is reached' do  ####TROUBLE
+    DockingStation::DEFAULT_CAPACITY.times {subject.dock(Bike.new)} #GUARD CONDITION
+    expect {subject.dock(Bike.new)}.to raise_error("Docking station full")
+  end
+
+# ATTR_ READER TEST
+
   context 'responds to "bike"'
     it { is_expected.to respond_to(:bike)}
 
+
+
+# RELEASE BIKES TESTS
+
+  it { should respond_to(:release_bike) }
+
   describe '#release_bike' do
     it 'expects "release_bike" to get a working bike' do
-      bike = Bike.new #GUARD CONDITION
-      subject.dock(bike) #GUARD CONTION
+      bike = Bike.new
+      subject.dock(bike)
       expect(subject.release_bike).to eq bike
     end
 
@@ -27,4 +45,6 @@ describe DockingStation do
       expect { subject.release_bike }.to raise_error("No Bikes Available")
     end
   end
+
+
 end
