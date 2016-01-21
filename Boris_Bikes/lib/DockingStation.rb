@@ -12,8 +12,8 @@ attr_reader :bikes, :capacity
 
   def release_bike
     raise "No Bikes Available" if @bikes.empty?
-    raise "Sorry, this Bike is Broken" if @bikes[0].broken?
-    @bikes.pop
+    raise "Sorry, this Bike is Broken" if @bikes[-1].broken?
+      @bikes.pop
   end
 
   def dock(bike)
