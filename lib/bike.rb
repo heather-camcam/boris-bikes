@@ -1,14 +1,14 @@
 class Bike
 
   def working?
-    true
+    true unless @broken_status
   end
 
   def bike_broken
     @broken_status = true
   end
 
-  def broken?
-    @broken_status
-  end
+  #def broken?
+  #  @broken_status
+  #end
 end

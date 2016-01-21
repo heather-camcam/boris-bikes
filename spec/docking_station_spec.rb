@@ -30,7 +30,7 @@ describe DockingStation do
 
   it 'release a bike when it is available' do
     #allow(bike).to receive(:broken?).and_return(false)
-    bike = double(:bike, broken?: false)
+    bike = double(:bike, working?: true)
     subject.dock_bike(bike)
     expect(subject.release_bike).to eq bike
   end
@@ -46,9 +46,9 @@ describe DockingStation do
 
   it 'should release all broken bikes' do
      bikes = [
-     broken_bike1 = double(:bike, broken?: true),
-     broken_bike2 = double(:bike, broken?: true),
-     working_bike3 = double(:bike, broken?: false)]
+     broken_bike1 = double(:bike, working?: false),
+     broken_bike2 = double(:bike, working?: false),
+     working_bike3 = double(:bike, working?: true)]
      bikes.each {|bike| subject.dock_bike(bike)}
      expect(subject.release_broken).to include broken_bike1, broken_bike2
   end

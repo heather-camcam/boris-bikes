@@ -8,7 +8,7 @@ describe Bike do
 
   it 'if reported broken, then bike does not work' do
     subject.bike_broken
-    expect(subject).to be_broken
+    expect(subject).not_to be_working
   end
 
 # is expecting subject.working? to retrun true
