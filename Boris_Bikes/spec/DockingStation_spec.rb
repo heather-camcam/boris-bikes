@@ -7,11 +7,15 @@ describe DockingStation do
 # INITIALIZE TESTS
 
   describe "#initialize" do
-    it "allows the user to set a capacity when a new docking station is made" do
+    it "gives the docking station a default capacity of 20 when initializing a docking station" do
       expect(subject.capacity).to eq (20)
     end
+    it "allows the user to set a default capacity when initializing a docking station" do
+      station = DockingStation.new(45)
+      45.times {station.dock Bike.new}
+      expect{station.dock Bike.new}.to raise_error("Docking station full")
+    end
   end
-
 
 # DOCKING BIKE TESTS
 
