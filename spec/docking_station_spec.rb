@@ -2,13 +2,16 @@ require 'docking_station'
 
 describe DockingStation do
 
-  let(:bike) {double(:bike, :working? => true,
-    :broken? => false)}
+  #let(:bike) {double(:bike, working?: true,
+  #  broken?: false)}
+
+  let(:bike) {double(:bike)}
 
   it { is_expected.to respond_to(:release_bike) }
 
   it 'check if bike is working' do
     #allow(bike).to receive(:working?).and_return(true)
+    bike = double(:bike, working?: true)
     expect(bike.working?).to eq true
   end
 
@@ -27,6 +30,7 @@ describe DockingStation do
 
   it 'release a bike when it is available' do
     #allow(bike).to receive(:broken?).and_return(false)
+    bike = double(:bike, broken?: false)
     subject.dock_bike(bike)
     expect(subject.release_bike).to eq bike
   end
