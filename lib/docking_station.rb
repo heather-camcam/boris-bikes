@@ -10,6 +10,10 @@ class DockingStation
     @capacity = capacity
   end
 
+  def release_broken
+    bikes.select{|bike| bike.broken?}.push
+  end
+
   def release_bike
     raise "No bikes available!" if empty?
     raise "Bike is broken" if bikes[-1].broken?

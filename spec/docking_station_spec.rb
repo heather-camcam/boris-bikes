@@ -44,4 +44,13 @@ describe DockingStation do
     expect { subject.dock_bike(bike) }.to raise_error("Station is full!")
   end
 
+  it 'should release all broken bikes' do
+     bikes = [
+     broken_bike1 = double(:bike, broken?: true),
+     broken_bike2 = double(:bike, broken?: true),
+     working_bike3 = double(:bike, broken?: false)]
+     bikes.each {|bike| subject.dock_bike(bike)}
+     expect(subject.release_broken).to include broken_bike1, broken_bike2
+  end
+
 end
