@@ -10,4 +10,8 @@ class Garage
     bikes.concat bike
   end
 
+  def fix_bike(bike)
+    bike.broken_status = false
+  end
+
 end
