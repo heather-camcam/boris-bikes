@@ -39,4 +39,19 @@ describe DockingStation do
     expect { subject.dock_bike(Bike.new) }.to raise_error("Station is full!")
   end
 
+  it 'able to enter station capacity' do
+    station = DockingStation.new(50)
+    expect(station.capacity).to eq(50)
+  end
+
+  it 'capacity defaults to 20 if not added' do
+    #station = DockingStation.new
+    expect(subject.capacity).to eq(20)
+  end
+
+  it 'station has variable capacity' do
+    station = DockingStation.new(50)
+    50.times { station.dock_bike(Bike.new) }
+    expect { station.dock_bike(Bike.new) }.to raise_error("Station is full!")
+  end
 end
