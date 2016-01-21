@@ -9,13 +9,16 @@ describe Bike do
 
 #BROKEN TESTS
 
-  it { should respond_to(:report_broken) }
 
-  it { should respond_to(:broken?) }
-
+  describe '#report_broken' do
+    it 'allows user to report a broken bike' do
+      expect(bike.report_broken).to be true
+    end
+  end
 
   describe '#broken?' do
     it 'returns true when bike is broken' do
+      bike.report_broken
       expect(bike.broken?).to be true
     end
   end
