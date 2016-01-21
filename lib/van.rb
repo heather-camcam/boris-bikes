@@ -7,8 +7,7 @@ class Van
   end
 
   def load_van(bike)
-    #@bikes += bike
-    bikes << bike
+    bikes.concat bike
   end
 
   def release_bikes
