@@ -32,19 +32,12 @@ describe DockingStation do
 
   context 'responds to "bikes"'
     it { is_expected.to respond_to(:bikes)}
-
-
-
-# RELEASE BIKES TESTS
-
-  it { should respond_to(:release_bike) }
-
+#
   describe '#release_bike' do
     it 'expects "release_bike" to get a working bike' do
-      # allow(dummy_bike).to receive(:broken?).and_return(false)
-      bike = double(:dummy_bike, broken?: false)
-      subject.dock(bike)
-      expect(subject.release_bike).to eq bike
+      dummy_bike = double(broken?: false)
+      subject.dock(dummy_bike)
+      expect(subject.release_bike).to eq dummy_bike
     end
 
     it 'raises error "No Bikes Available" when docking station is empty' do
@@ -52,13 +45,21 @@ describe DockingStation do
     end
 
     it 'raises error "Sorry, this Bike is Broken" when asked to release a broken bike.' do
-      # allow(dummy_bike).to receive(:report_broken).and_return(true)
-      # allow(dummy_bike).to receive(:broken?).and_return(true)
-      bike = double(:dummy_bike, broken?: true, report_broken: true)
-      bike.report_broken
-      subject.dock(bike)
+      broken_bike = double(broken?: true, report_broken: true)
+      subject.dock(broken_bike)
       expect {subject.release_bike}.to raise_error("Sorry, this Bike is Broken")
     end
+  end
+
+  describe '#release_broken_bikes' do
+
+    it 'releases only the broken bikes' do
+      broken_bike = double(broken?: true, report_broken: true)
+      subject.dock(broken_bike)
+      subject.release_broken_bikes
+      expect(subject.bikes).to_not include broken_bike
+    end
+
   end
 
 end

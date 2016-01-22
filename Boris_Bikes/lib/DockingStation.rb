@@ -21,8 +21,15 @@ attr_reader :bikes, :capacity
     @bikes << bike # => Shovelling a bike into the array
   end
 
-private
+  def release_broken_bikes
+    broken_bikes = []
+    bikes.each do |bike|
+      broken_bikes << bike if bike.broken?
+    end
+    bikes.delete_if {|bike| bike.broken?}
+  end
 
+private
 
   def full?
     @bikes.size >= @capacity
